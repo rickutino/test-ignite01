@@ -17,7 +17,7 @@ export function TaskList() {
 
   function handleCreateNewTask(event: FormEvent) {
     event.preventDefault();
-    if(!newTaskTitle) { return }
+    if(!newTaskTitle) return ;
 
     const newTask = {
       id : uuid(),
@@ -26,24 +26,21 @@ export function TaskList() {
     }
 
     setNewTaskTitle("");
-    setTasks([...tasks, newTask]);
+    setTasks(oslTask => [...oslTask, newTask]);
   }
 
   function handleToggleTaskCompletion(id: number) {
-
-    const updateTask = tasks.map((task) => {
-      if(task.isComplete === true && task.id === id) {
-        return { ...task, isComplete: false}
-      }
-      return task.id === id ? { ...task, isComplete: true} : task
+    const updateTask = tasks.map(task => {
+      return task.id === id ? { 
+        ...task, 
+        isComplete: !task.isComplete
+      } : task
     });
 
     setTasks(updateTask);
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
-    
     const deleteTask = tasks.filter(task => {
       return task.id !== id;
     });
